@@ -17,7 +17,7 @@ jobs:
             api-token: ${{ secrets.ROX_API_TOKEN }}
             image: "logankimmel/hello-go:full"
         - name: Scan details
-          run: output="${{ steps.run-scan.outputs.policy-txt }}"
+          run: echo '${{ steps.run-scan.outputs.policy-txt }}'
         # - name: Scan check
         #   run: echo '${{ steps.run-scan.outputs.policy-txt }}'
 
