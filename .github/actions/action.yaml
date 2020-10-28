@@ -28,7 +28,7 @@ runs:
     - id: scan-info
       run: |
         output="$(./roxctl image scan -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }})" || true
-        echo "::set-output name=scan-info::$output"
+        echo "::set-output name=scan-info::"this\nthat""
       env:
         ROX_API_TOKEN: ${{ inputs.api-token }}
       shell: bash
