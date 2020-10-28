@@ -25,11 +25,11 @@ runs:
       shell: bash
     - run: chmod +x ./roxctl
       shell: bash
-    - run: SCAN_JSON=$(./roxctl image scan -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }})
+    - run: ./roxctl image scan -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }} &> /tmp/image-scan || true
       env:
         ROX_API_TOKEN: ${{ inputs.api-token }}
       shell: bash
-    - run: SCAN_CHECK=$(./roxctl image check -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }})
+    - run: ./roxctl image check -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }} &> /tmp/image-check || true
       env:
         ROX_API_TOKEN: ${{ inputs.api-token }}
       shell: bash
