@@ -35,6 +35,7 @@ runs:
         output="${output//$'\t'/'%09'}"
         output="${output//$';'/'%3B'}"
         output="${output//$'$'/'%24'}"
+        output="${output//$'\''/'%27'}"
         echo ::set-output name=scan-info::"$output"
       env:
         ROX_API_TOKEN: ${{ inputs.api-token }}
@@ -49,6 +50,7 @@ runs:
         output="${output//$'\t'/'%09'}"
         output="${output//$';'/'%3B'}"
         output="${output//$'$'/'%24'}"
+        output="${output//$'\''/'%27'}"
         echo ::set-output name=scan-check::"$output"
       env:
         ROX_API_TOKEN: ${{ inputs.api-token }}
