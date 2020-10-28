@@ -25,11 +25,17 @@ runs:
       shell: bash
     - run: chmod +x ./roxctl
       shell: bash
-    - run: ./roxctl image scan -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }} &> /tmp/image-scan || true
+    - id: scan-info
+      run: |
+        output="$(./roxctl image scan -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }})"
+        echo "::set-output name=scan-info::$output"
       env:
         ROX_API_TOKEN: ${{ inputs.api-token }}
       shell: bash
-    - run: ./roxctl image check -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }} &> /tmp/image-check || true
+    - id: scan-check
+      run: |
+        output="$(./roxctl image check -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }})"
+        echo "::set-output name=scan-check::$output"
       env:
         ROX_API_TOKEN: ${{ inputs.api-token }}
       shell: bash
