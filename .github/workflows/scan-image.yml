@@ -1,0 +1,21 @@
+name: scan-image
+
+on: push
+
+jobs:
+  scan-image:
+    name: Scan Image
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - name: Run scan
+          id: run-scan
+          uses: ./.github/actions/image-scan-action
+          with:
+            central-endpoint: "central.rox.binbytes.io:443"
+            api-token: ${{ secrets.ROX_API_TOKEN }}
+            image: "logankimmel/hello-go:full"
+        - name: Scan details
+          run: echo "${{ steps.run-scan.outputs.scan-json }} \n\n\n\n ${{ steps.run-scan.outputs.layers-csv }} \n\n\n\n ${{ steps.run-scan.outputs.policy-txt }}"
+
