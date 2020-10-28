@@ -13,10 +13,10 @@ inputs:
 outputs:
   scan-json:
     description: 'Raw scan JSON'
-    value: ${{ steps.image-scan.outputs.scan-json }}
+    value: ${{ steps.scan-info.outputs.scan-info}}
   policy-txt:
     description: 'roxctl image check output'
-    value: ${{ steps.image-check.outputs.policy-txt }}
+    value: ${{ steps.scan-check.outputs.scan-check }}
 runs:
   using: "composite"
   steps:
@@ -25,13 +25,17 @@ runs:
       shell: bash
     - run: chmod +x ./roxctl
       shell: bash
-    - run: echo "::set-output name=scan-json::\"$(./roxctl image scan -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }})\""
-      id: image-scan
+    - run: SCAN_JSON=$(./roxctl image scan -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }})
       env:
         ROX_API_TOKEN: ${{ inputs.api-token }}
       shell: bash
-    - run: echo "::set-output name=policy-txt::\"$(./roxctl image check -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }})\""
-      id: image-check
+    - run: SCAN_CHECK=$(./roxctl image check -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }})
       env:
         ROX_API_TOKEN: ${{ inputs.api-token }}
+      shell: bash
+    - run: echo "::set-output name=scan-info::$(echo $SCAN_JSON)"
+      id: scan-info
+      shell: bash
+    - run: echo "::set-output name=scan-check::$(echo $SCAN_CHECK)"
+      id: scan-check
       shell: bash
