@@ -37,7 +37,7 @@ runs:
       shell: bash
     - id: scan-check
       run: |
-        output="$(./roxctl image check -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }})" || true
+        output="$(./roxctl image check -e ${{ inputs.central-endpoint }} --image ${{ inputs.image }})" --json || true
         output="${output//'%'/'%25'}"
         output="${output//$'\n'/'%0A'}"
         output="${output//$'\r'/'%0D'}"
