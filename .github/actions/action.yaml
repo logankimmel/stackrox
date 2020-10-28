@@ -41,6 +41,7 @@ runs:
         output="${output//'%'/'%25'}"
         output="${output//$'\n'/'%0A'}"
         output="${output//$'\r'/'%0D'}"
+        output="${output//$'\`'/'%60}"
         echo "::set-output name=scan-check::$output"
       env:
         ROX_API_TOKEN: ${{ inputs.api-token }}
