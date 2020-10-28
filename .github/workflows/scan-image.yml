@@ -17,8 +17,18 @@ jobs:
             api-token: ${{ secrets.ROX_API_TOKEN }}
             image: "logankimmel/hello-go:full"
         - name: Scan details
-          run: echo '${{ steps.run-scan.outputs.policy-txt }}'
+          run: echo '${{ steps.run-scan.outputs.policy-txt }}' > /tmp/scan.json
         - name: Scan check
-          run: echo '${{ steps.run-scan.outputs.policy-txt }}'
+          run: echo '${{ steps.run-scan.outputs.policy-txt }}' > /tmp/check.json
+        - name: Upload scan
+          uses: actions/upload-artifact@v2
+          with:
+            name: Scan Results
+            path: /tmp/scan.json
+        - name: Upload check
+          uses: actions/upload-artifact@v2
+          with:
+            name: Scan Checkout
+            path: /tmp/check.json
 
 
